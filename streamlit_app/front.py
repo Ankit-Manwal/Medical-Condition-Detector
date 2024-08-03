@@ -15,8 +15,6 @@ from diabetes import diabetes_backendfunction as diab
 from skin_diseases import skin_diseases_backendfunction as skin
 
 
-
-
 #streamlit app*******************************************************************************************************************************************
 def main():
     # Set page configuration
@@ -27,11 +25,11 @@ def main():
 
     # sidebar for navigation
     with st.sidebar:
-        selected = option_menu('Multiple Disease Prediction System',
+        selected = option_menu('Multiple Disease Detection System',
 
-                            ['Medical Condition Predictor',
-                                'Diabetes Prediction',
-                                'Skin Disease Prediction'],
+                            ['Symptom based Detection',
+                                'Diabetes Detection',
+                                'Skin Disease Detection'],
                             menu_icon='hospital-fill',
                             icons=['activity', 'heart','bandaid-fill'],
                             default_index=0)
@@ -39,11 +37,11 @@ def main():
 
 
     # Diabetes Prediction Page
-    if selected == 'Medical Condition Predictor':
+    if selected == 'Symptom based Detection':
             
             # Streamlit
-            st.title("General Medical Condition Predictor")
-            st.write("Enter a paragraph describing your symptoms, and the model will predict possible conditions along with their definitions and recommendations.")
+            st.title("Symptom based Medical Condition Detector")
+            st.write("Enter a paragraph describing your symptoms, and the model will detect possible medical conditions along with their definitions and recommendations.")
 
             # Input from user
             symptoms = st.text_area("Describe your symptoms here:")
@@ -64,9 +62,9 @@ def main():
 
                     else:
                         # Display the results
-                            st.write("### Predicted Conditions")
-                            st.write(f"**Condition:** {result['predicted_disease']}")
-                            st.write(f"**Confidence (approx):** {result['confidence_score'] * 100:.2f}% &nbsp; &nbsp;&nbsp;&nbsp;**(This confidence score reflects the reliability of the prediction)**")
+                            st.write("### Detected Medical Condition")
+                            st.write(f"**Medical Condition:** {result['predicted_disease']}")
+                            st.write(f"**Confidence (approx):** {result['confidence_score'] * 100:.2f}% &nbsp; &nbsp;&nbsp;&nbsp;**(This confidence score reflects the reliability of the result)**")
                             st.write(f"**Definition:** {result['description']}")
                             
                             st.write("**Recommendations:**")
@@ -78,8 +76,8 @@ def main():
 
 
     #Diabetes Prediction Page
-    if selected == 'Diabetes Prediction':
-        st.title('Diabetes Predictor')
+    if selected == 'Diabetes Detection':
+        st.title('Diabetes Detector')
 
         # Input fields for diabetes prediction
         pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, value=0, step=1)
@@ -102,14 +100,14 @@ def main():
                 # Display the result
                 st.write("### Prediction Result")
                 st.write(f"Prediction: {result['predicted_class']}")
-                st.write(f"Confidence: {result['confidence']} % &nbsp; &nbsp;&nbsp;&nbsp; **(This confidence score reflects the reliability of the prediction)**")
+                st.write(f"Confidence: {result['confidence']} % &nbsp; &nbsp;&nbsp;&nbsp; **(This confidence score reflects the reliability of the result)**")
 
 
     #Skin Disease Prediction Page
-    if selected == 'Skin Disease Prediction':
+    if selected == 'Skin Disease Detection':
 
-            st.title("Skin Disease Prediction")
-            st.write("Upload an image for prediction")
+            st.title("Skin Disease Detector")
+            st.write("Upload an image...")
 
             # File uploader widget
             uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -126,7 +124,7 @@ def main():
                         prediction = skin.give_skin_diseases_prediction(uploaded_file)
 
                         st.write(f"Prediction: {prediction['predicted_class']}")
-                        st.write(f"Confidence: {prediction['confidence']} %&nbsp; &nbsp;&nbsp;&nbsp; **(This confidence score reflects the reliability of the prediction)**")
+                        st.write(f"Confidence: {prediction['confidence']} %&nbsp; &nbsp;&nbsp;&nbsp; **(This confidence score reflects the reliability of the result)**")
 
 
 if __name__ == '__main__':
